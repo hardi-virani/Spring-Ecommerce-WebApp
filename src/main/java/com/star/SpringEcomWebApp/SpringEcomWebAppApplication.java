@@ -8,6 +8,7 @@ public class SpringEcomWebAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringEcomWebAppApplication.class, args);
+		System.out.println("Hardi");
 	}
 
 }
