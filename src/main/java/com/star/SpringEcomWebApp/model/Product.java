@@ -18,6 +18,10 @@ import java.util.Date;
 @Entity
 public class Product {
 
+    public Product(int id) {
+        this.id = id;
+    }
+
     @Id
     private int id;
     private String name;
@@ -29,4 +33,5 @@ public class Product {
     private Date releaseDate;
     private boolean productAvailable;
     private int stockQuantity;
+
 }

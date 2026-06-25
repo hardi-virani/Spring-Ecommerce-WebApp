@@ -28,7 +28,7 @@ public class ProductController {
 
         Product product = productService.getProductById(id);
 
-       if(product != null) {
+       if(product.getId() > 0) {
            return new ResponseEntity<>(product, HttpStatus.OK );
        }
        else {
