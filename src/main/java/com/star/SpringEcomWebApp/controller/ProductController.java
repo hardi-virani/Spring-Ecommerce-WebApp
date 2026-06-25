@@ -19,12 +19,12 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<List<Product>> getAllProducts() { //The reason we have use List<Product> is because we needed the whole list of products
         return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable int id) {
+    public ResponseEntity<Product> getProductById(@PathVariable int id) { // Here only product is because, we just needed one product amoung that list of products.
 
         Product product = productService.getProductById(id);
 
@@ -34,7 +34,6 @@ public class ProductController {
        else {
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
        }
-
 
     }
 }
