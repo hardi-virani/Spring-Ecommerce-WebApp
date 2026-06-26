@@ -110,26 +110,35 @@ public class OrderService {
         return orderResponse;
     }
 
-
+    // Fetch all orders from the DB and convert them into OrderResponse DTOs
     public List<OrderResponse> getAllOrdersResponses() {
 
-        List<Order> orders = orderRepo.findAll(); // this data will be coming from DB.
+        // Get all Order entitites stored in the DB.
+        List<Order> orders = orderRepo.findAll();
 
+        //This list will store the final respsonse DTOs returned to the client.
         List<OrderResponse> orderResponses = new ArrayList<>(); // we also need the object of list of orderResponses. Because this is what we are going to send right now. in return.
 
+        // Loop through every order fetched from the DB.
         for(Order order : orders) {
 
+            // This list will store response DTOs for items belonging to the current order.
             List<OrderItemResponse> itemResponses = new ArrayList<>();
 
+            // Convert each OrderItem entity into OrderItemResponse DTO.
             for(OrderItem item : order.getOrderItems()) {
+
+                // Create a response object containing only the required item details
                 OrderItemResponse orderItemResponse = new OrderItemResponse(
                         item.getProduct().getName(),
                         item.getQuantity(),
                         item.getTotalPrice()
                 );
+                // Add the converted item to the current order's response list.
                 itemResponses.add(orderItemResponse);
             }
 
+            // Create a response DTO for the current order.
             OrderResponse orderResponse = new OrderResponse(
                     order.getOrderId(),
                     order.getCustomerName(),
@@ -138,10 +147,13 @@ public class OrderService {
                     order.getOrderDate(),
                     itemResponses
             );
+
+            // Add the current order respoonse to the final response list.
             orderResponses.add(orderResponse);
 
         }
 
+        // Return all orders in a clean response format.
         return orderResponses;
     }
 }
