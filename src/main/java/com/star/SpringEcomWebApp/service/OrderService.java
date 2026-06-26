@@ -112,6 +112,36 @@ public class OrderService {
 
 
     public List<OrderResponse> getAllOrdersResponses() {
-        return null;
+
+        List<Order> orders = orderRepo.findAll(); // this data will be coming from DB.
+
+        List<OrderResponse> orderResponses = new ArrayList<>(); // we also need the object of list of orderResponses. Because this is what we are going to send right now. in return.
+
+        for(Order order : orders) {
+
+            List<OrderItemResponse> itemResponses = new ArrayList<>();
+
+            for(OrderItem item : order.getOrderItems()) {
+                OrderItemResponse orderItemResponse = new OrderItemResponse(
+                        item.getProduct().getName(),
+                        item.getQuantity(),
+                        item.getTotalPrice()
+                );
+                itemResponses.add(orderItemResponse);
+            }
+
+            OrderResponse orderResponse = new OrderResponse(
+                    order.getOrderId(),
+                    order.getCustomerName(),
+                    order.getEmail(),
+                    order.getStatus(),
+                    order.getOrderDate(),
+                    itemResponses
+            );
+            orderResponses.add(orderResponse);
+
+        }
+
+        return orderResponses;
     }
 }
